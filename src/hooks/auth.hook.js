@@ -1,10 +1,10 @@
 import {useState} from 'react';
 
 import {Amplify, Auth} from 'aws-amplify';
-import amplifyconfiguration from './../amplifyconfiguration';
+import amplifyconfiguration from '../../amplifyconfiguration';
 Amplify.configure(amplifyconfiguration);
 
-import {useAuth} from './authContext';
+import {useAuth} from './authContext.hook.js';
 
 export default authHook = () => {
   const {updateUser} = useAuth();
@@ -23,9 +23,15 @@ export default authHook = () => {
       autoSignIn: {enable: false},
     };
 
-    const {user} = await Auth.signUp(signUpInfo);
-    console.log(user);
-    updateUser(user);
+    try {
+      const user = await Auth.signUp(signUpInfo);
+      console.log('user => ', user);
+      updateUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log('frère');
   };
 
   const handleOTP = async () => {
@@ -39,9 +45,19 @@ export default authHook = () => {
 
   const signIn = async () => {
     try {
-      const {user} = await Auth.signIn(login, motDePasse);
+      const user = await Auth.signIn(login, motDePasse);
       console.log({user});
       updateUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await Auth.signOut();
+      console.log('Vous avez été déconnecté');
+      updateUser(null);
     } catch (error) {
       console.log(error);
     }
@@ -57,5 +73,6 @@ export default authHook = () => {
     signUp,
     signIn,
     handleOTP,
+    logout,
   };
 };

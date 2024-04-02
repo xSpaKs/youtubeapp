@@ -5,35 +5,17 @@
  * @format
  */
 
-import {React, useContext, createContext} from 'react';
-import {
-  TextInput,
-  Button,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {React} from 'react';
+import {StyleSheet} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import Accueil from './src/features/accueil';
-import Abonnements from './src/features/abonnement';
-import Camera from './src/features/camera';
-import Shorts from './src/features/shorts';
-import Profil from './src/features/profil';
+import Accueil from './src/components/accueil/accueil';
+import Abonnements from './src/components/abonnement/abonnement';
+import Camera from './src/components/camera/camera';
+import Shorts from './src/components/shorts/shorts';
+import Profil from './src/components/profil/profil';
 
 import IconFoundation from 'react-native-vector-icons/Foundation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -42,20 +24,19 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
-import {useAuth, AuthProvider} from './hooks/authContext';
+import {useAuth, AuthProvider} from './src/hooks/authContext.hook.js';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 function BottomNavigator() {
   const {user} = useAuth();
-  console.log(user);
 
   return (
     <Tab.Navigator
       initialRouteName="Accueil"
       activeColor="blue"
-      barStyle={{backgroundColor: 'tomato'}}>
+      barStyle={{backgroundColor: 'red'}}>
       <Tab.Screen
         name="Accueil"
         component={Accueil}
@@ -125,7 +106,7 @@ function App() {
     <AuthProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{}}>
-          <Stack.Screen name="BottomNav" component={BottomNavigator} />
+          <Stack.Screen name="Youtube" component={BottomNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
