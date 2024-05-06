@@ -5,7 +5,7 @@ export function useFetchVideoData() {
   const [startQuery, setStartQuery] = useState(false);
 
   useEffect(() => {
-    setStartQuery(false);
+    setStartQuery(true);
   }, []);
 
   const fetchVideos = async () => {
