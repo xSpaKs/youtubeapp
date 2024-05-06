@@ -1,29 +1,22 @@
-import {useState} from 'react';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
+import {useQuery} from 'react-query';
 
 export function useFetchVideoData() {
-  const [videos, setVideos] = useState([]);
+  const [startQuery, setStartQuery] = useState(false);
 
   useEffect(() => {
-    fetchVideos();
+    setStartQuery(false);
   }, []);
 
   const fetchVideos = async () => {
-    try {
-      const response = await fetch(
-        'https://jsonplaceholder.typicode.com/users/1/todos',
-      );
-      const data = await response.json();
-
-      const fetchedVideos = data.map(item => ({
-        id: item.id,
-        title: item.title,
-      }));
-      setVideos(fetchedVideos);
-    } catch (error) {
-      console.error('Error fetching videos:', error);
+    const response = await fetch(
+      'https://jsonplaceholder.typicode.com/users/1/todos',
+    );
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
+    return response.json();
   };
 
-  return {videos};
+  return useQuery('videos', fetchVideos, {enabled: startQuery});
 }

@@ -26,8 +26,12 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 
 import {useAuth, AuthProvider} from './src/hooks/authContext.hook.js';
 
+import {QueryClient, QueryClientProvider} from 'react-query';
+
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
+
+const queryClient = new QueryClient();
 
 function BottomNavigator() {
   const {user} = useAuth();
@@ -103,13 +107,15 @@ function BottomNavigator() {
 
 function App() {
   return (
-    <AuthProvider>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{}}>
-          <Stack.Screen name="Youtube" component={BottomNavigator} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{}}>
+            <Stack.Screen name="Youtube" component={BottomNavigator} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 

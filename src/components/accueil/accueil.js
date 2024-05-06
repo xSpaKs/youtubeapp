@@ -5,10 +5,11 @@ import Video from '../video/video.js';
 import {componentsStyles} from '../components.styles.js';
 import {accueilStyles} from './accueil.styles.js';
 
+import {useEffect} from 'react';
 import {useFetchVideoData} from '../../hooks/fetchVideoData.hook.js';
 
 export default function Accueil({navigation}) {
-  const {videos} = useFetchVideoData();
+  const {isLoading, error, data: videos} = useFetchVideoData();
 
   return (
     <View style={accueilStyles.container}>
