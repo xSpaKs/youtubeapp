@@ -4,15 +4,21 @@ import Video from '../video/video.js';
 import {componentsStyles} from '../components.styles.js';
 import {accueilStyles} from './accueil.styles.js';
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useFetchVideoData} from '../../hooks/fetchVideoData.hook.js';
 
 export default function Accueil({navigation}) {
   const [refreshing, setRefreshing] = useState(false);
   const {isLoading, error, data: videos} = useFetchVideoData();
 
+  useEffect(() => {
+    console.log('New videos have been fetched');
+  }, [videos]);
+
   const onRefresh = async () => {
-    setRefreshing(true);
+    setRefreshing(false);
+
+    setRefreshing(false);
   };
 
   return (
